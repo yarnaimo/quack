@@ -1,0 +1,56 @@
+{
+  "name": "@yarnaimo/quack",
+  "version": "1.0.0",
+  "private": true,
+  "repository": "https://github.com/github:yarnaimo/quack",
+  "license": "MIT",
+  "author": "yamaimo <yarnaimo@gmail.com>",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "NODE_ENV=test jest",
+    "ts-node": "ts-node",
+    "dev": "ts-node src/index.ts",
+    "build": "tsc",
+    "start": "NODE_ENV=production node dist/index.js"
+  },
+  "jest": {
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "src/**/*.ts?(x)"
+    ],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ],
+    "testEnvironment": "node",
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/dist/"
+    ],
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    }
+  },
+  "dependencies": {
+    "@slack/client": "^4.6.0",
+    "@yarnaimo/arraymo": "^1.0.1",
+    "dayjs": "^1.7.5",
+    "dotenv": "^6.0.0",
+    "got": "^9.2.0"
+  },
+  "devDependencies": {
+    "@types/dotenv": "^4.0.3",
+    "@types/got": "^8.3.3",
+    "@types/jest": "^23.3.1",
+    "@types/node": "^10.9.4",
+    "jest": "^23.5.0",
+    "ts-jest": "^23.1.4",
+    "ts-node": "^7.0.1",
+    "typescript": "^3.0.3"
+  }
+}
