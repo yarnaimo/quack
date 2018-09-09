@@ -10,7 +10,7 @@ describe('Main', () => {
         request_hypo_type: 'eew',
     })
     jest.spyOn(EEWData, 'parseData').mockReturnValue({})
-    jest.spyOn(EEWHistory.prototype, 'process').mockReturnValue(true)
+    jest.spyOn(EEWHistory, 'process').mockReturnValue(true)
 
     jest.spyOn(Push7, 'send').mockResolvedValue({
         pushid: '{pushid}',
