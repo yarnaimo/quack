@@ -41,12 +41,14 @@
     "@yarnaimo/arraymo": "^1.0.1",
     "dayjs": "^1.7.5",
     "dotenv": "^6.0.0",
-    "got": "^9.2.0"
+    "got": "^9.2.0",
+    "nock": "^9.6.1"
   },
   "devDependencies": {
     "@types/dotenv": "^4.0.3",
     "@types/got": "^8.3.3",
     "@types/jest": "^23.3.1",
+    "@types/nock": "^9.3.0",
     "@types/node": "^10.9.4",
     "jest": "^23.5.0",
     "ts-jest": "^23.1.4",
