@@ -16,41 +16,40 @@ describe('EEWData', () => {
 })
 
 describe('EEWHistory', () => {
-    const history = new EEWHistory()
     const report_id = '20180906030805'
 
+    jest.useFakeTimers()
+
     test('first intensity', () => {
-        const intensityChanged = history.process({
+        const intensityChanged = EEWHistory.process({
             report_id,
             calcintensity: '4',
         } as any)
         expect(intensityChanged).toBeTruthy()
+        expect(EEWHistory.logs[report_id]).toEqual(['4'])
     })
 
     test('changed intensity', () => {
-        const intensityChanged = history.process({
+        const intensityChanged = EEWHistory.process({
             report_id,
             calcintensity: '6-',
         } as any)
         expect(intensityChanged).toBeTruthy()
+        expect(EEWHistory.logs[report_id]).toEqual(['4', '6-'])
     })
 
     test('unchanged intensity', () => {
-        const intensityChanged = history.process({
+        const intensityChanged = EEWHistory.process({
             report_id,
             calcintensity: '6-',
         } as any)
         expect(intensityChanged).toBeFalsy()
+        expect(EEWHistory.logs[report_id]).toEqual(['4', '6-'])
     })
 
-    test('final report', () => {
-        const intensityChanged = history.process({
-            report_id,
-            calcintensity: '7',
-            is_final: true,
-        } as any)
-        expect(intensityChanged).toBeTruthy()
-        expect(history.logs[report_id]).toBeUndefined()
+    test('clear', () => {
+        jest.advanceTimersByTime(1000 * 60 * 15)
+        expect(EEWHistory.logs[report_id]).toBeUndefined()
     })
 })
 
