@@ -5,13 +5,12 @@ import { Slack } from './Slack'
 
 export const perform = async () => {
     const data = await getEEWData()
-    console.log(data.request_time)
-
-    if (!data.report_id || data.request_hypo_type !== 'eew') return
+    if (data.request_hypo_type !== 'eew' || !data.report_id) return
 
     const intensityChanged = EEWHistory.process(data)
     if (!intensityChanged) return
 
+    console.log(`[${data.report_id}] intensity: ${data.calcintensity}`)
     const parsed = parseData(data)
 
     const res = await Promise.all([

@@ -6,8 +6,9 @@ import { Slack } from '../Slack'
 
 describe('Main', () => {
     jest.spyOn(EEWData, 'getEEWData').mockResolvedValue({
-        report_id: '{report_id}',
+        report_id: '20180906030805',
         request_hypo_type: 'eew',
+        calcintensity: '4',
     })
     jest.spyOn(EEWData, 'parseData').mockReturnValue({})
     jest.spyOn(EEWHistory, 'process').mockReturnValue(true)
