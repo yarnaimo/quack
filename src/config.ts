@@ -1,6 +1,6 @@
 import { load } from 'dotenv'
 
-const { parsed } = load()
+load()
 
 interface Config {
     PUSH7_APIKEY: string
@@ -8,4 +8,4 @@ interface Config {
     SLACK_WEBHOOK_URL: string
 }
 
-export const config = (parsed as any) as Config
+export const config = (process.env as any) as Config
