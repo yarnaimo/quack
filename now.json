@@ -1,0 +1,19 @@
+{
+    "name": "quackapp",
+    "alias": "quackapp",
+    "engines": {
+        "node": "^10.7.0"
+    },
+    "scale": {
+        "sfo1": {
+            "min": 1,
+            "max": 1
+        }
+    },
+    "env": {
+        "TZ": "Asia/Tokyo",
+        "PUSH7_APIKEY": "@quack-push7-apikey",
+        "PUSH7_BASE_URL": "@quack-push7-base-url",
+        "SLACK_WEBHOOK_URL": "@quack-slack-webhook-url"
+    }
+}
