@@ -56,49 +56,47 @@ const formatDateString = (date: string) => {
     ].join(':')
 }
 
-const u = (intensity: string) => {
+const iconUrl = (intensity: string) => {
     return `https://raw.githubusercontent.com/yarnaimo/quack/master/icons/${intensity}.png`
 }
 
-const icons = {
-    '0': u('0'),
-    '1': u('1'),
-    '2': u('2'),
-    '3': u('3'),
-    '4': u('4'),
-    '5弱': u('5-'),
-    '5強': u('5+'),
-    '6弱': u('6-'),
-    '6強': u('6+'),
-    '7': u('7'),
-} as { [key: string]: string }
-
-const isString = (v: any): v is string => typeof v === 'string'
+const icons = new Set([
+    ['0', '0'],
+    ['1', '1'],
+    ['2', '2'],
+    ['3', '3'],
+    ['4', '4'],
+    ['5弱', '5-'],
+    ['5強', '5+'],
+    ['6弱', '6-'],
+    ['6強', '6+'],
+    ['7', '7'],
+].map(([k, v]) => [k, iconUrl(v)]))
 
 export const parseData = (data: IEEWData) => {
-    const cancel = data.is_cancel
-
-    const metadata = [
-        cancel || (data.alertflg === '予報' && '(予報)'),
-        cancel || (data.is_final ? '最終報' : `第${data.report_num}報`),
-    ].filter(isString)
-
-    const region = [
-        cancel && '« キャンセル »',
-        data.is_training && '« 訓練 »',
-        data.region_name,
-    ].filter(isString)
-
-    const detail = [
-        cancel || `マグニチュード ${data.magunitude}`,
-        `発生時刻 ${formatDateString(data.origin_time)}`,
-        cancel || `深さ ${data.depth}`,
-    ].filter(isString)
-
-    const icon =
-        data.is_cancel || data.is_training
-            ? undefined
-            : icons[data.calcintensity]
-
-    return { icon, metadata, region, detail } as IParsedEEWData
+    const {
+        origin_time,
+        is_cancel: isCancel,
+        is_training: isTraining,
+        alertflg,
+        report_num,
+        is_final: isFinal,
+        region_name: regionName,
+        magunitude,
+        depth,
+        calcintensity: intensity,
+    } = data
+ 
+    return {
+        icon: isCancel || isTraining ? undefined : icons.get(intensity),
+        dateString: formatDateString(origin_time),
+        isCancel,
+        isTraining,
+        isWarning: alertflg === '警報',
+        reportNumber: isFinal ? '最終報' : `第${report_num}報`,
+        regionName,
+        magunitude,
+        depth,
+        intensity,
+    }
 }
