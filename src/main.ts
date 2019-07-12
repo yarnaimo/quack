@@ -3,12 +3,18 @@ import { EEWHistory } from './EEWHistory'
 import { Push7 } from './Push7'
 import { Slack } from './Slack'
 
-export const perform = async () => {
-    const data = await getEEWData()
-    if (data.request_hypo_type !== 'eew' || !data.report_id) return
+const history = EEWHistory()
 
-    const intensityChanged = EEWHistory.process(data)
-    if (!intensityChanged) return
+export const run = async () => {
+    const data = await getEEWData()
+    if (data.request_hypo_type !== 'eew' || !data.report_id) {
+        return
+    }
+
+    const { intensityChanged } = history.process(data)
+    if (!intensityChanged) {
+        return
+    }
 
     console.log(`[${data.report_id}] intensity: ${data.calcintensity}`)
     const parsed = parseData(data)
